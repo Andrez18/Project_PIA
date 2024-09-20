@@ -92,7 +92,7 @@ nav ul li a:hover {
 
 .hero {
     height: 100vh;
-    background-image: url('../../Project_PIA/imgs/img-biblio-1.jpg');
+    background-image: url('../imgs/img-biblio-1.jpg');
     background-size: cover;
     background-position: center;
     display: flex;
