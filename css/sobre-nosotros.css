@@ -92,7 +92,6 @@ nav ul li a:hover {
 
 .hero {
     height: 100vh;
-    background-image: url('../imgs/img-biblio-1.jpg');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -101,8 +100,10 @@ nav ul li a:hover {
     align-items: center;
     text-align: center;
     color: var(--light-bg-color);
-    padding-top: var(--header-height); /* Deja espacio para el header fijo */
+    padding-top: var(--header-height);
+
 }
+
 
 .hero h2 {
     font-size: 2.5rem;
@@ -171,8 +172,7 @@ nav ul li a:hover {
 
 
 .about-hero {
-    background-image: url('../imgs/about-hero.jpg');
-    height: 50vh;
+    background-image: url('../imgs/img-biblio-1.jpg');
 }
 
 .team-container {
