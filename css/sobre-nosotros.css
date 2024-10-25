@@ -213,7 +213,6 @@ nav ul li a:hover {
 .about-section {
     padding: 3rem 5rem;
     background-color: var(--light-bg-color);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin: 2rem auto;
     max-width: 800px;
     border-radius: 8px;
@@ -232,6 +231,7 @@ nav ul li a:hover {
     font-size: 18px;
     color: var(--main-text-color);
     line-height: 1.8;
+    padding-bottom: 30px;
 }
 
 .auth-container {
@@ -449,57 +449,19 @@ button[type="submit"]:hover {
     to { opacity: 1; transform: translateY(0); }
 }
 
-.contact-container, .info-container {
-    animation: fadeIn 0.5s ease-out;
+.about-project{
+    color: #ddd;    
+    margin-left: 270px;
+    margin-bottom: 4rem;
 }
 
-.books-section {
-    padding: 60px 0;
-    background-color: #f4f4f4;
-}
-
-.books-container {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-}
-
-.book-item {
-    width: 250px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    margin: 20px;
-    transition: transform 0.3s ease;
-}
-
-.book-item:hover {
-    transform: translateY(-5px);
-}
-
-.book-item img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px 8px 0 0;
-}
-
-.book-item h3 {
-    font-size: 18px;
-    margin: 15px 0 5px;
-    padding: 0 15px;
-}
-
-.book-item p {
-    color: #666;
-    padding: 0 15px 15px;
-}
-
-/* Footer */
-footer {
-    background-color: rgba(0, 0, 0, 0.1);
-    color: #000;
-    padding: 20px;
-    text-align: center;
+.about-project a{
+    background: #3498db;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
 }
 
 ::-webkit-scrollbar {
