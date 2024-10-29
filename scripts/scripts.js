@@ -65,3 +65,34 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const link = dropdown.querySelector('a');
+        const content = dropdown.querySelector('.dropdown-content');
+
+        // Toggle dropdown on click
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            content.style.display = content.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!dropdown.contains(e.target)) {
+                content.style.display = 'none';
+            }
+        });
+
+        // Handle hover events for desktop
+        dropdown.addEventListener('mouseenter', function() {
+            content.style.display = 'block';
+        });
+
+        dropdown.addEventListener('mouseleave', function() {
+            content.style.display = 'none';
+        });
+    });
+});
+
