@@ -47,3 +47,21 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    const bookItems = document.querySelectorAll(".book-item");
+    bookItems.forEach(item => {
+        const img = item.querySelector("img");
+        img.addEventListener("click", (event) => {
+            event.stopPropagation(); 
+            
+            document.querySelectorAll(".book-options").forEach(options => {
+                options.classList.add("hidden");
+            });
+            
+            const options = item.querySelector(".book-options");
+            options.classList.toggle("hidden");
+        });
+    });
+});
+
