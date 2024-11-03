@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     `;
                     loadBorrowedBooks();
                 } else {
+                    alert('Como no tienes sesión iniciada serás redireccionado a el lugar de inicio de sesión')
                     window.location.href = 'login.html';
                 }
             });
@@ -57,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    window.location.href = 'inicio.html';
+                    window.location.href = '../html/index.html';
                 }
             });
     });

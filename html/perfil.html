@@ -6,6 +6,8 @@
     <title>Mi Perfil - OReBook</title>
     <link rel="stylesheet" href="../css/perfil.css">
     <link rel="shortcut icon" href="../imgs/lg.jpg">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
+
 </head>
 <body>
     <header>
@@ -15,10 +17,16 @@
                 <h1>OReBook</h1>
             </div>
             <ul>
-                <li><a href="index.html">Inicio</a></li>
+                <li><a href="index.html" class="active">inicio</a></li>
                 <li><a href="libros.html">Libros</a></li>
-                <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
-                <li><a href="#" id="logout-btn">Cerrar Sesión</a></li>
+                <li class="dropdown">
+                    <a href="sobre-nosotros.html">Sobre Nosotros</a>
+                    <ul class="dropdown-content">
+                        <li><a href="ayuda.html">Ayuda</a></li>
+                        <li><a href="nuestro-proyecto.html">Nuestro Proyecto</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" id="logout-btn"><i class="ri-login-box-line"></i></a></li>
             </ul>
         </nav>
     </header>
