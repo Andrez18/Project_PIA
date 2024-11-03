@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OReBook - Tu Biblioteca Online</title>
-    <link rel="stylesheet" href="../../Project_PIA/css/libros.css">
-    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/libros.css">
     <link rel="shortcut icon" href="../imgs/lg.jpg">
-
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
 </head>
 <body>
     <header>
@@ -17,7 +19,7 @@
         </div>
         <nav>
             <ul>
-                <li><a href="../inicio.html">Inicio</a></li>
+                <li><a href="index.html">Inicio</a></li>
                 <li><a href="libros.html">Libros</a></li>
                 <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
             </ul>
@@ -29,13 +31,19 @@
             <h2>Busca tu libro favorito</h2>
             <div class="search-container">
                 <input type="text" id="search-input" placeholder="Buscar por título, autor o fecha...">
-                <button id="search-button" aria-label="Buscar libro"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <button id="search-button" aria-label="Buscar libro"><i class="ri-search-line"></i></button>
             </div>
+            <div id="suggestions-container" class="suggestions-container"></div>
             <div id="loader" style="display: none;">
                 <i class="fas fa-spinner fa-spin"></i> Buscando...
             </div>
         </section>
-
+        <section id="resultados">
+            <h2>Resultados de la búsqueda</h2>
+            <div id="libros-resultados" class="libros-grid">
+                <!-- Los resultados de la búsqueda se insertarán aquí dinámicamente -->
+            </div>
+        </section>
         <section id="recomendaciones">
             <h2>Recomendaciones para ti</h2>
             <div id="libros-recomendados" class="libros-grid">
@@ -43,12 +51,7 @@
             </div>
         </section>
 
-        <section id="resultados">
-            <h2>Resultados de la búsqueda</h2>
-            <div id="libros-resultados" class="libros-grid">
-                <!-- Los resultados de la búsqueda se insertarán aquí dinámicamente -->
-            </div>
-        </section>
+        
     </main>
 
     <script src="../scripts/libros.js"></script>
