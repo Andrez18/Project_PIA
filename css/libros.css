@@ -14,18 +14,23 @@ body {
 }
 
 header {
-    background-color: #3498db; /* Mejor contraste */
-    color: #fff;
+    background-color: rgba(44, 62, 80, 0.3);
+    color: #ecf0f1;
     padding: 1rem 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
 }
 
 .logo {
     display: flex;
     align-items: center;
+    margin-left: 2rem;
 }
 
 .logo img {
@@ -33,6 +38,12 @@ header {
     max-width: 50px;
     max-height: 50px;
     border-radius: 50%;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 nav ul {
@@ -46,19 +57,19 @@ nav ul li {
 }
 
 nav ul li a {
-    color: #fff;
+    color: #ecf0f1;
     text-decoration: none;
     font-weight: 600;
     transition: color 0.3s;
 }
 
 nav ul li a:hover {
-    color: #2980b9; /* Efecto hover */
+    color: #3498db;
 }
 
 main {
     max-width: 1200px;
-    margin: 2rem auto;
+    margin: 6rem auto 2rem;
     padding: 0 2rem;
 }
 
@@ -74,6 +85,7 @@ h2 {
 .search-container {
     display: flex;
     margin-bottom: 2rem;
+    position: relative;
 }
 
 #search-input {
@@ -85,65 +97,18 @@ h2 {
 }
 
 #search-button {
-    background-color: #1d4ed8; /* Botón más atractivo */
-    color: #fff;
     padding: 0.5rem 1rem;
     border: none;
+    background: #3498db;
+    color: white;
     border-radius: 0 4px 4px 0;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
 #search-button:hover {
-    background-color: #0f52ba; /* Hover en botón */
+    background-color: #2980b9;
 }
-
-#loader {
-    margin-top: 1rem;
-    font-size: 1.2rem;
-    color: #2c3e50;
-    display: flex;
-    align-items: center;
-}
-
-#panel-info {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    padding: 2rem;
-    max-width: 400px;
-    width: 100%;
-}
-
-.panel-content button {
-    display: block;
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    background-color: #1d4ed8;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-}
-
-.panel-content button:hover {
-    background-color: #0f52ba;
-}
-
-#cerrar-panel {
-    background-color: #f44336;
-}
-
-#cerrar-panel:hover {
-    background-color: #e53935;
-}
-
 
 .libros-grid {
     display: grid;
@@ -157,6 +122,7 @@ h2 {
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
+    cursor: pointer;
 }
 
 .libro:hover {
@@ -183,36 +149,88 @@ h2 {
     color: #666;
 }
 
+.suggestions-container {
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.sugerencia {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.sugerencia:hover {
+    background-color: #f0f0f0;
+}
+
+#panel-info {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1100;
+    max-width: 500px;
+    width: 90%;
+}
+
+.panel-content button {
+    display: block;
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.panel-content button:hover {
+    background-color: #2980b9;
+}
+
+#cerrar-panel {
+    background-color: #e74c3c !important;
+}
+
+#cerrar-panel:hover {
+    background-color: #c0392b !important;
+}
+
 @media (max-width: 768px) {
     .libros-grid {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     }
 
-    .logo img {
-        width: 50px;
+    header {
+        flex-direction: column;
+        padding: 1rem;
     }
 
     nav ul {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    nav ul li {
-        margin-left: 0;
         margin-top: 1rem;
+        justify-content: center;
     }
-}
 
-::-webkit-scrollbar {
-    width: 8px;
-    height: 3px;
-}
+    .logo {
+        margin-left: 0;
+        justify-content: center;
+    }
 
-::-webkit-scrollbar-thumb {
-    background-color: #2980b9;
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background-color: #3498db;
+    main {
+        margin-top: 8rem;
+    }
 }
