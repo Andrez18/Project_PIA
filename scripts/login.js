@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             alert(data.message);
             if (data.success) {
-                window.location.href = 'inicio.html';
+                window.location.href = '../html/index.html';
             }
         })
         .catch(error => {
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             alert(data.message);
             if (data.success) {
-                window.location.href = 'inicio.html';
+                window.location.href = '../html/index.html';
             }
         })
         .catch(error => {

@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 if (data.success) {
                     checkSession();
-                    window.location.href = 'inicio.html';
+                    window.location.href = '../html/index.html';
                 }
             });
     }
