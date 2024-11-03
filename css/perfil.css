@@ -13,14 +13,29 @@ body {
     background-color: #f4f4f4;
 }
 
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
 header {
-    background-color: #3498db; /* Mejor contraste */
-    color: #fff;
+    background-color: rgba(44, 62, 80, 0.3);
+    color: #ecf0f1;
     padding: 1rem 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    padding: 0 20px;
 }
 
 .logo {
@@ -38,27 +53,27 @@ header {
 nav ul {
     display: flex;
     list-style: none;
-    margin-right: 2rem;
 }
 
 nav ul li {
-    margin-left: 1.5rem;
+    margin-left: 20px;
 }
 
 nav ul li a {
-    color: #fff;
+    color: #ecf0f1;
     text-decoration: none;
-    font-weight: 600;
-    transition: color 0.3s;
+    font-weight: bold;
+    transition: color 0.3s ease;
 }
 
 nav ul li a:hover {
-    color: #2980b9; /* Efecto hover */
+    color: #3498db;
 }
+
 
 main {
     max-width: 1200px;
-    margin: 2rem auto;
+    margin: 6rem auto;
     padding: 0 2rem;
 }
 
