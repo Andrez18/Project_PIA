@@ -201,6 +201,22 @@ th {
     }
 }
 
+.actions-bar{
+    margin: 10px 0;
+}
+
+#search-users, 
+#search-loans,
+#search-books{
+    width: 400px;
+    max-width: 400px;
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid #444;
+    font-size: 15px;
+    color: #444;
+}
+
 /* Animations */
 @keyframes fadeIn {
     from { opacity: 0; }
