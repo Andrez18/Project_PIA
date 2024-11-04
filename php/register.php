@@ -24,15 +24,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $role = $_POST['role'];
 
     try {
-        $stmt = $pdo->prepare("INSERT INTO usuarios (nombre, email, password) VALUES (?, ?, ?)");
-        $stmt->execute([$name, $email, $password]);
+        $stmt = $pdo->prepare("INSERT INTO usuarios (nombre, email, password, rol) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$name, $email, $password, $role]);
         
         $_SESSION['user'] = [
             'id' => $pdo->lastInsertId(),
             'email' => $email,
-            'name' => $name
+            'name' => $name,
+            'role' => $role
         ];
         echo json_encode(['success' => true, 'message' => "Registro exitoso"]);
     } catch (\PDOException $e) {

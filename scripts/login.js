@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const name = document.getElementById('register-name').value;
         const email = document.getElementById('register-email').value;
         const password = document.getElementById('register-password').value;
+        const role = document.querySelector('input[name="role"]:checked').value;
 
         fetch('../php/register.php', {
             method: 'POST',
@@ -26,14 +27,19 @@ document.addEventListener('DOMContentLoaded', () => {
             body: new URLSearchParams({
                 'name': name,
                 'email': email,
-                'password': password
+                'password': password,
+                'role': role
             })
         })
         .then(response => response.json())
         .then(data => {
             alert(data.message);
             if (data.success) {
-                window.location.href = '../html/index.html';
+                if (role === 'administrador') {
+                    window.location.href = '../html/admin.html';
+                } else {
+                    window.location.href = '../html/index.html';
+                }
             }
         })
         .catch(error => {
@@ -47,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const email = document.getElementById('login-email').value;
         const password = document.getElementById('login-password').value;
+        const role = document.querySelector('input[name="role"]:checked').value;
 
         fetch('../php/login.php', {
             method: 'POST',
@@ -55,14 +62,19 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             body: new URLSearchParams({
                 'email': email,
-                'password': password
+                'password': password,
+                'role': role
             })
         })
         .then(response => response.json())
         .then(data => {
             alert(data.message);
             if (data.success) {
-                window.location.href = '../html/index.html';
+                if (role === 'administrador') {
+                    window.location.href = '../html/admin.html';
+                } else {
+                    window.location.href = '../html/index.html';
+                }
             }
         })
         .catch(error => {
