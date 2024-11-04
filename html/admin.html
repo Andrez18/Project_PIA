@@ -56,7 +56,7 @@
             <section id="books" class="admin-section">
                 <h2>Gestión de Libros</h2>
                 <div class="actions-bar">
-                    <button id="add-book" class="btn-primary">Añadir Libro</button>
+                    <button id="btn-new-book" class="btn-primary">Nuevo Libro</button>
                     <input type="search" id="search-books" placeholder="Buscar libros...">
                 </div>
                 <div class="books-table-container">
@@ -159,8 +159,7 @@
     <!-- Modales -->
     <div id="modal-book" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Añadir/Editar Libro</h2>
+            <span class="close-modal">&times;</span>
             <form id="book-form">
                 <div class="form-group">
                     <label>Título</label>
@@ -182,7 +181,17 @@
                     <label>Introducción</label>
                     <textarea name="introduccion" required></textarea>
                 </div>
-                <button type="submit" class="btn-primary">Guardar</button>
+                <div class="form-group">
+                    <label>Estado:</label>
+                    <select name="estado" required>
+                        <option value="disponible">Disponible</option>
+                        <option value="prestado">Prestado</option>
+                        <option value="reservado">Reservado</option>
+                        <option value="no_disponible">No disponible</option>
+                    </select>
+                </div>
+                <button type="submit">Guardar</button>
+                <button type="button" class="cancel-modal">Cancelar</button>
             </form>
         </div>
     </div>
