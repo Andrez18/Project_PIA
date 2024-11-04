@@ -11,16 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
 // Nuevo: Manejo del modal
 function initModalHandlers() {
     const modal = document.getElementById('modal-book');
-    const btnOpenModal = document.getElementById('btn-new-book'); // Asegúrate de tener este botón en tu HTML
-    const closeButtons = modal.querySelectorAll('.close-modal, .cancel-modal'); // Para botones de cerrar
+    const btnOpenModal = document.getElementById('btn-new-book'); 
+    const closeButtons = modal.querySelectorAll('.close-modal, .cancel-modal'); 
 
     // Abrir modal
     if (btnOpenModal) {
         btnOpenModal.addEventListener('click', () => {
             const form = document.getElementById('book-form');
             if (form) {
-                form.reset(); // Limpiar el formulario
-                // Remover el input hidden de book_id si existe
+                form.reset(); 
                 const idInput = form.querySelector('[name="book_id"]');
                 if (idInput) idInput.remove();
             }
