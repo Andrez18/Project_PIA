@@ -355,3 +355,28 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 });
+
+
+function insertarLibros() {
+    fetch('../php/insertar_libros.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(libros)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            console.log("Libros insertados correctamente en la base de datos.");
+        } else {
+            console.error("Error al insertar los libros:", data.message);
+        }
+    })
+    .catch(error => {
+        console.error("Error en la solicitud:", error);
+    });
+}
+
+// Llama a la función para insertar los libros en la base de datos
+insertarLibros();
