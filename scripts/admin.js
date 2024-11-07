@@ -386,28 +386,59 @@ async function editUser(id) {
 }
 
 // Función global para eliminar usuario
-// Ejemplo de cómo debería ser la llamada en el frontend
-const deleteUser = async (userId) => {
-    try {
-      const response = await fetch('../php/admin/borrar_usuario.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ id: userId })
-      });
-      
-      const data = await response.json();
-      
-      if (data.success) {
-        // Importante: Actualizar el estado local después de la eliminación exitosa
-        setUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
-        // O si usas Redux/otro estado global
-        // dispatch(removeUser(userId));
-      } else {
-        console.error('Error:', data.error);
-      }
-    } catch (error) {
-      console.error('Error:', error);
+const deleteUser  = async (userId) => {
+    if (confirm('¿Está seguro de que desea eliminar a este usuario?')) {
+        try {
+            const response = await fetch('../php/admin/borrar_usuario.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: userId })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                alert('Usuario eliminado exitosamente');
+                await loadUsers(); // Llama a la función que recarga la lista de usuarios
+            } else {
+                console.error('Error:', data.error);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
     }
-  };
+};
+
+// Cargar lista de usuarios
+async function loadUsers() {
+    const tableBody = document.querySelector('#users-table tbody');
+    if (!tableBody) return;
+
+    try {
+        const response = await fetch('../php/admin/conseguir_usuarios.php');
+        const data = await response.json();
+
+        if (data.success) {
+            tableBody.innerHTML = data.users.map(user => `
+                <tr>
+                    <td>${user.nombre}</td>
+                    <td>${user.email}</td>
+                    <td>${user.fecha_registro || ''}</td>
+                    <td>${user.rol}</td>
+                    <td>
+                        <button onclick="editUser (${user.id})" class="btn-edit">
+                            <i class="ri-edit-line"></i>
+                        </button>
+                        <button onclick="deleteUser (${user.id})" class="btn-delete">
+                            <i class="ri-delete-bin-line"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+    } catch (error) {
+        console.error('Error al cargar usuarios:', error);
+    }
+}
