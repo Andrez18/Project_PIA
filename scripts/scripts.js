@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const message = document.getElementById('contact-message').value;
 
             alert(`Enviando mensaje: \nNombre: ${name}\nEmail: ${email}\nMensaje: ${message}`);
+            alert('Mensaje enviado.');
         });
     }
 });

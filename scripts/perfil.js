@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 if (data.loggedIn) {
                     userInfoDiv.innerHTML = `
-                        <p><strong>Nombre:</strong> ${data.name}</p>
+                        <p><strong>Nombre:</strong> ${data.nombre}</p>
                         <p><strong>Email:</strong> ${data.email}</p>
                     `;
                     loadBorrowedBooks();

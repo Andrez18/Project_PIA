@@ -234,3 +234,15 @@ h2 {
         margin-top: 8rem;
     }
 }
+
+.libro-estado {
+    font-weight: bold;
+}
+
+.libro-estado.prestado {
+    color: green;
+}
+
+.libro-estado:not(.prestado) {
+    color: red;
+}

@@ -306,27 +306,89 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    function prestarLibro(libroId) {
+    function prestarLibro(libro) {
         fetch('../php/prestar_libro.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                libro_id: libroId
+                libro_id: libro.id
             })
         })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert('El libro ha sido prestado.');
+                alert('El libro ha sido prestado con éxito.');
+                libro.disponible = false;
+                actualizarVistaLibro(libro);
                 panelInfo.style.display = 'none';
             } else {
                 alert('Hubo un error al prestar el libro: ' + data.message);
             }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Hubo un error al prestar el libro. Por favor, inténtelo de nuevo.');
         });
     }
-
+    
+    function actualizarVistaLibro(libro) {
+        const libroElement = document.querySelector(`[data-libro-id="${libro.id}"]`);
+        if (libroElement) {
+            const estadoElement = libroElement.querySelector('.libro-estado');
+            if (estadoElement) {
+                estadoElement.textContent = libro.disponible ? 'Disponible' : 'No disponible';
+                estadoElement.classList.toggle('No disponible', !libro.disponible);
+            }
+        }
+    }
+    
+    function mostrarPanelLibro(libro) {
+        panelInfo.innerHTML = `
+            <div class="panel-content">
+                <h2>${libro.titulo}</h2>
+                <p><strong>Autor:</strong> ${libro.autor}</p>
+                <p><strong>Fecha de publicación:</strong> ${libro.fecha}</p>
+                <p><strong>Estado:</strong> <span class="libro-estado ${libro.disponible ? '' : 'No disponible'}">${libro.disponible ? 'Disponible' : 'No disponible'}</span></p>
+                <div id="introduccion" style="display: none;">
+                    <h3>Introducción</h3>
+                    <p>${libro.introduccion}</p>
+                </div>
+                ${libro.disponible ? '<button id="prestar-libro">Prestar</button>' : ''}
+                <button id="previsualizar-libro">Previsualizar</button>
+                <button id="downloadButton">Descargar PDF</button>
+                <button id="cerrar-panel">Cerrar</button>
+            </div>
+        `;
+        panelInfo.style.display = 'block';
+    
+        if (libro.disponible) {
+            document.getElementById('prestar-libro').addEventListener('click', () => {
+                verificarSesion(() => prestarLibro(libro));
+            });
+        }
+    
+        document.getElementById('cerrar-panel').addEventListener('click', () => {
+            panelInfo.style.display = 'none';
+        });
+    
+        document.getElementById('downloadButton').addEventListener('click', () => {
+            verificarSesion(() => descargarPDF(libro));
+        });
+    
+        document.getElementById('previsualizar-libro').addEventListener('click', () => {
+            const introduccion = document.getElementById('introduccion');
+            if (introduccion.style.display === 'none') {
+                introduccion.style.display = 'block';
+                document.getElementById('previsualizar-libro').textContent = 'Ocultar previsualización';
+            } else {
+                introduccion.style.display = 'none';
+                document.getElementById('previsualizar-libro').textContent = 'Previsualizar';
+            }
+        });
+    }
+    
     function descargarPDF(libro) {
         const tituloFormateado = libro.titulo.replace(/\s+/g, '_').toLowerCase();
         const urlPDF = `../pdfs/${tituloFormateado}.pdf`;
@@ -357,26 +419,3 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-function insertarLibros() {
-    fetch('../php/insertar_libros.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(libros)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'success') {
-            console.log("Libros insertados correctamente en la base de datos.");
-        } else {
-            console.error("Error al insertar los libros:", data.message);
-        }
-    })
-    .catch(error => {
-        console.error("Error en la solicitud:", error);
-    });
-}
-
-// Llama a la función para insertar los libros en la base de datos
-insertarLibros();
