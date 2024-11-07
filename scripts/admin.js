@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     obtenerActividadReciente();
     initMenuNavigation();
     initLogoutHandler();
+    initUserManagement();
 });
 
 // Nuevo: Manejo del modal
@@ -230,3 +231,183 @@ function initLogoutHandler() {
         });
     }
 }
+
+// Manejo de usuarios
+function initUserManagement() {
+    const userForm = document.getElementById('user-form');
+    const modal = document.getElementById('modal-user');
+    const btnAddUser = document.getElementById('add-user'); 
+    const closeButtons = modal.querySelectorAll('.close-modal, .cancel-modal');
+
+    // Inicializar el modal
+    function initModalHandler() {
+        // Abrir modal con el botón de nuevo usuario
+        if (btnAddUser) {
+            btnAddUser.addEventListener('click', () => {
+                if (userForm) userForm.reset();
+                const idInput = userForm.querySelector('[name="user_id"]');
+                if (idInput) idInput.remove();
+                modal.style.display = 'block';
+            });
+        }
+
+        // Cerrar modal con botones
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+        });
+
+        // Cerrar modal haciendo clic fuera
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    }
+
+    // Manejo del formulario
+    if (userForm) {
+        userForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const submitButton = userForm.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.textContent;
+            submitButton.textContent = 'Guardando...';
+            submitButton.disabled = true;
+
+            try {
+                const formData = {
+                    nombre: userForm.querySelector('[name="name"]').value,
+                    email: userForm.querySelector('[name="email"]').value,
+                    password: userForm.querySelector('[name="password"]').value,
+                    rol: userForm.querySelector('[name="role"]').value
+                };
+
+                const userId = userForm.querySelector('[name="user_id"]');
+                if (userId && userId.value) {
+                    formData.user_id = userId.value;
+                }
+
+                const response = await fetch('../php/admin/guardar_usuarios.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert(data.message || 'Usuario guardado correctamente');
+                    userForm.reset();
+                    modal.style.display = 'none';
+                    await loadUsers();
+                } else {
+                    throw new Error(data.error || 'Error al guardar el usuario');
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                submitButton.textContent = originalButtonText;
+                submitButton.disabled = false;
+            }
+        });
+    }
+
+    // Cargar lista de usuarios
+    async function loadUsers() {
+        const tableBody = document.querySelector('#users-table tbody');
+        if (!tableBody) return;
+
+        try {
+            const response = await fetch('../php/admin/conseguir_usuarios.php');
+            const data = await response.json();
+
+            if (data.success) {
+                tableBody.innerHTML = data.users.map(user => `
+                    <tr>
+                        <td>${user.nombre}</td>
+                        <td>${user.email}</td>
+                        <td>${user.fecha_registro || ''}</td>
+                        <td>${user.rol}</td>
+                        <td>
+                            <button onclick="editUser(${user.id})" class="btn-edit">
+                                <i class="ri-edit-line"></i>
+                            </button>
+                            <button onclick="deleteUser(${user.id})" class="btn-delete">
+                                <i class="ri-delete-bin-line"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        } catch (error) {
+            console.error('Error al cargar usuarios:', error);
+        }
+    }
+
+    // Inicializar todo
+    initModalHandler();
+    loadUsers();
+}
+
+// Función global para editar usuario
+async function editUser(id) {
+    try {
+        const response = await fetch(`../php/admin/conseguir_usuario.php?id=${id}`);
+        const data = await response.json();
+
+        if (data.success) {
+            const user = data.user;
+            const form = document.getElementById('user-form');
+            const modal = document.getElementById('modal-user');
+            
+            form.querySelector('[name="name"]').value = user.nombre;
+            form.querySelector('[name="email"]').value = user.email;
+            form.querySelector('[name="role"]').value = user.rol;
+            form.querySelector('[name="password"]').value = '';
+            
+            let idInput = form.querySelector('[name="user_id"]');
+            if (!idInput) {
+                idInput = document.createElement('input');
+                idInput.type = 'hidden';
+                idInput.name = 'user_id';
+                form.appendChild(idInput);
+            }
+            idInput.value = id;
+
+            modal.style.display = 'block';
+        }
+    } catch (error) {
+        console.error('Error al cargar el usuario:', error);
+        alert('Error al cargar los datos del usuario');
+    }
+}
+
+// Función global para eliminar usuario
+// Ejemplo de cómo debería ser la llamada en el frontend
+const deleteUser = async (userId) => {
+    try {
+      const response = await fetch('../php/admin/borrar_usuario.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id: userId })
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        // Importante: Actualizar el estado local después de la eliminación exitosa
+        setUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
+        // O si usas Redux/otro estado global
+        // dispatch(removeUser(userId));
+      } else {
+        console.error('Error:', data.error);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };

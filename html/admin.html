@@ -106,7 +106,7 @@
             <section id="loans" class="admin-section">
                 <h2>Gestión de Préstamos</h2>
                 <div class="actions-bar">
-                    <button id="new-loan" class="btn-primary">Nuevo Préstamo</button>
+                    <button id="btn-new-user" class="btn-primary">Nuevo Usuario</button>
                     <input type="search" id="search-loans" placeholder="Buscar préstamos...">
                 </div>
                 <div class="loans-table-container">
@@ -198,9 +198,9 @@
 
     <div id="modal-user" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Añadir/Editar Usuario</h2>
+            <span class="close-modal">&times;</span>
             <form id="user-form">
+                <h2>Agrega/edita usuarios</h2>
                 <div class="form-group">
                     <label>Nombre</label>
                     <input type="text" name="name" required>
@@ -214,13 +214,14 @@
                     <input type="password" name="password">
                 </div>
                 <div class="form-group">
-                    <label>Rol</label>
-                    <select name="role">
-                        <option value="user">estudiantes</option>
-                        <option value="admin">Administrador</option>
+                    <label for="role">Rol:</label>
+                    <select name="role" id="role" required>
+                        <option value="estudiante">Estudiante</option>
+                        <option value="administrador">Administrador</option>
                     </select>
                 </div>
-                <button type="submit" class="btn-primary">Guardar</button>
+                <button type="submit">Guardar</button>
+                <button type="button" class="cancel-modal">Cancelar</button>
             </form>
         </div>
     </div>
